@@ -1,8 +1,11 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
+const dbConnect = require('./config/dbConnect')
 
 const testRoutes = require('./routes/testRoute');
+
+dbConnect();
 
 app.use('/',testRoutes);
 
