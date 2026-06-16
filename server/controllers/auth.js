@@ -1,33 +1,59 @@
 const User = require('../models/user');
 const bcrypt = require('bcryptjs')
 
-const registerUser = async (req,res) => {
+const registerUser = async (req, res) => {
     try {
-        const { name , email , password} = req.body;
+        const { name, email, password } = req.body;
 
-        if(!name || !email || !password){
-            return res.status(400).json({message : "Please fill all credentials for register"});
+        if (!name || !email || !password) {
+            return res.status(400).json({ message: "Please fill all credentials for register" });
         }
 
-        const existingUser = await User.findOne({email});
+        const existingUser = await User.findOne({ email });
 
-        if(existingUser){
-            return res.status(409).json({message : "User already exists"});
+        if (existingUser) {
+            return res.status(409).json({ message: "User already exists" });
         }
 
-        const hashedPassword = await bcrypt.hash(password,10);
+        const hashedPassword = await bcrypt.hash(password, 10);
 
         await User.create({
             name,
             email,
-            password:hashedPassword
+            password: hashedPassword
         });
 
-        return res.status(201).json({message : "User registered"});
+        return res.status(201).json({ message: "User registered" });
 
     } catch (error) {
-        return res.status(500).json({message : error.message});
+        return res.status(500).json({ message: error.message });
     }
 };
 
-module.exports = {registerUser};
+const loginUser = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            return res.status(400).json({ message: "Please fill all credentials for login" });
+        }
+
+        const user = await User.findOne({ email }).select("+password");
+
+        if (!user) {
+            return res.status(401).json({ message: "User not exist,please register first" });
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if (!isMatch) {
+            return res.status(401).json({ message: "password is wrong" });
+        }
+
+        return res.status(200).json({ message: "User logged" });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+}
+
+module.exports = { registerUser, loginUser };
