@@ -4,11 +4,12 @@ const app = express();
 const dbConnect = require('./config/dbConnect')
 
 const testRoutes = require('./routes/testRoute');
+const authRoutes = require('./routes/auth');
 
 dbConnect();
 
 app.use('/',testRoutes);
-
+app.use('/api/auth',authRoutes);
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT,()=>{
