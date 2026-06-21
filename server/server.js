@@ -6,6 +6,8 @@ const dbConnect = require('./config/dbConnect')
 const testRoutes = require('./routes/testRoute');
 const authRoutes = require('./routes/auth');
 
+app.use(express.json());
+
 dbConnect();
 
 app.use('/',testRoutes);
