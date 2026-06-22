@@ -13,7 +13,7 @@ dbConnect();
 
 app.use('/',testRoutes);
 app.use('/api/auth',authRoutes);
-app.use('/api/question',questionRoutes);
+app.use('/api/questions',questionRoutes);
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT,()=>{

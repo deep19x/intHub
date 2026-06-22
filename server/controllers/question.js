@@ -20,4 +20,14 @@ const createQuestion = async(req,res) => {
     }
 };
 
-module.exports = {createQuestion};
+const getQuestions = async (req,res) => {
+    try {
+        const questions = await Question.find({});
+
+        return res.status(200).json({message : "All questions so far!",questions});
+    } catch (error) {
+        return res.status(500).json({message : error.message});
+    }
+};
+
+module.exports = {createQuestion,getQuestions};

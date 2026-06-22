@@ -5,5 +5,6 @@ const adminMiddleware = require('../middlewares/admin');
 const questionController = require('../controllers/question');
 
 router.post('/',authMiddleware,adminMiddleware,questionController.createQuestion);
+router.get('/',questionController.getQuestions);
 
 module.exports = router;
