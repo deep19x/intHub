@@ -13,11 +13,13 @@ const questionSchema = new mongoose.Schema({
     ],
     difficulty : {
         type : String,
-        enum : ["Easy","Medium","Hard"]
+        enum : ["Easy","Medium","Hard"],
+        required : true
     },
     topic : {
         type : String,
-        trim : true
+        trim : true,
+        required : true
     }
 },{timestamps:true});
 
