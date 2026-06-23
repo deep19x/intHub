@@ -59,4 +59,23 @@ const updateProgress = async (req, res) => {
     }
 }
 
-module.exports = {updateProgress};
+const getMyProgress = async (req, res) => {
+    try {
+        const progress = await UserProgress
+            .find({
+                user: req.user.userId
+            })
+            .populate('question');
+
+        return res.status(200).json({
+            progress
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            message: error.message
+        });
+    }
+};
+
+module.exports = {updateProgress,getMyProgress};
