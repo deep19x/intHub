@@ -6,7 +6,8 @@ const dbConnect = require('./config/dbConnect')
 const testRoutes = require('./routes/testRoute');
 const authRoutes = require('./routes/auth');
 const questionRoutes = require('./routes/question');
-const progressRoutes = require('/routes/progress');
+const progressRoutes = require('./routes/progress');
+const statsRoutes = require('./routes/statistics');
 
 app.use(express.json());
 
@@ -16,6 +17,7 @@ app.use('/',testRoutes);
 app.use('/api/auth',authRoutes);
 app.use('/api/questions',questionRoutes);
 app.use('/api/progress',progressRoutes);
+app.use('/api/stats',statsRoutes);
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT,()=>{
