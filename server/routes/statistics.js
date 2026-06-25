@@ -15,4 +15,8 @@ router
     .route('/difficulty')
     .get(authMiddleware,statsController.getStatsOnDifficulty);
 
+router
+    .route('/dashboard')
+    .get(authMiddleware,statsController.getDashboardStats);
+
 module.exports = router;
