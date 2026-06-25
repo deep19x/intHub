@@ -11,4 +11,8 @@ router
     .route('/topic')
     .get(authMiddleware,statsController.getStatsOnTopics);
 
+router
+    .route('/difficulty')
+    .get(authMiddleware,statsController.getStatsOnDifficulty);
+
 module.exports = router;

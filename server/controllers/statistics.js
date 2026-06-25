@@ -82,4 +82,49 @@ const getStatsOnTopics = async(req,res) => {
     }
 }
 
-module.exports = {getStats,getStatsOnTopics};
+const getStatsOnDifficulty = async(req,res) => {
+    try {
+        const questions = await Question.find({},'difficulty');
+        const progress = await UserProgress.find({
+            user : req.user.userId
+        }).populate('question','difficulty');
+
+        const difficultyStats = {};
+
+        questions.forEach((question) => {
+            const difficulty = question.difficulty;
+            if(!difficultyStats[difficulty]){
+                difficultyStats[difficulty] = {
+                    total : 0,
+                    solved : 0,
+                    attempted : 0
+                }
+            }
+
+            difficultyStats[difficulty].total++;
+        });
+
+        progress.forEach((item) => {
+            const difficulty = item.question.difficulty;
+
+            difficultyStats[difficulty][item.status]++;
+        });
+
+        for (const difficulty in difficultyStats){
+            const stats = difficultyStats[difficulty];
+
+            stats.todo = stats.total - stats.attempted - stats.solved;
+
+            stats.completionPercentage = Number(((stats.solved / stats.total) * 100).toFixed(2));
+        }
+
+        return res.status(200).json({difficultyStats});
+
+    } catch (error) {
+        return res.status(500).json({
+            message : error.message
+        });
+    }
+};
+
+module.exports = {getStats,getStatsOnTopics,getStatsOnDifficulty};
