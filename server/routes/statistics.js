@@ -7,4 +7,8 @@ router
     .route('/me')
     .get(authMiddleware,statsController.getStats);
 
+router
+    .route('/topic')
+    .get(authMiddleware,statsController.getStatsOnTopics);
+
 module.exports = router;

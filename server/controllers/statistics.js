@@ -1,4 +1,5 @@
 const Question = require('../models/question');
+const userProgress = require('../models/userProgress');
 const UserProgress = require('../models/userProgress');
 
 const getStats = async(req,res) => {
@@ -35,4 +36,50 @@ const getStats = async(req,res) => {
     }
 }
 
-module.exports = {getStats};
+const getStatsOnTopics = async(req,res) => {
+    try {
+
+        const questions = await Question.find({},'topic');
+        const progress = await userProgress.find({
+            user : req.user.userId
+        }).populate('question','topic');
+
+        const topicStats = {};
+
+        questions.forEach((question) => {
+            const topic = question.topic;
+
+            if(!topicStats[topic]){
+                topicStats[topic] = {
+                    total : 0,
+                    solved : 0,
+                    attempted : 0
+                };
+            }
+
+            topicStats[topic].total++;
+        });
+
+        progress.forEach((item) => {
+            const topic = item.question.topic;
+
+            topicStats[topic][item.status]++;
+        });
+
+        for(const topic in topicStats){
+            const stats = topicStats[topic];
+
+            stats.todo = stats.total - stats.attempted - stats.solved;
+
+            stats.completionPercentage = Number(((stats.solved / stats.total) * 100).toFixed(2));
+        }
+
+        return res.status(200).json({topicStats});
+    } catch (error) {
+        return res.status(500).json({
+            message : error.message
+        });
+    }
+}
+
+module.exports = {getStats,getStatsOnTopics};
