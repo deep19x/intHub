@@ -39,9 +39,9 @@ function Register() {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#1e293b_0%,#020617_70%)]"></div>
 
             {/* Register Card */}
-            <Card className="relative z-10 w-[420px] border-white/10 bg-white/5 text-white backdrop-blur-xl shadow-2xl">
+            <Card className="relative z-10 w-105 border-white/10 bg-white/5 text-white backdrop-blur-xl shadow-2xl">
                 <CardHeader className="space-y-3 text-center">
-                    <CardTitle className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-4xl font-bold text-transparent">
+                    <CardTitle className="bg-linear-to-r from-cyan-400 to-purple-400 bg-clip-text text-4xl font-bold text-transparent">
                         InTHub
                     </CardTitle>
 

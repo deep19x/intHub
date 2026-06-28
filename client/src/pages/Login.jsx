@@ -41,9 +41,9 @@ function Login() {
 
             {/* Card */}
 
-            <Card className="relative z-10 w-[420px] border-white/10 bg-white/5 text-white backdrop-blur-xl shadow-2xl">
+            <Card className="relative z-10 w-105 border-white/10 bg-white/5 text-white backdrop-blur-xl shadow-2xl">
                 <CardHeader className="space-y-3 text-center">
-                    <CardTitle className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+                    <CardTitle className="text-4xl font-bold bg-linear-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
                         InTHub
                     </CardTitle>
 
