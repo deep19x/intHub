@@ -1,13 +1,18 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
-const dbConnect = require('./config/dbConnect')
+const dbConnect = require('./config/dbConnect');
+const cors = require('cors');
 
 const testRoutes = require('./routes/testRoute');
 const authRoutes = require('./routes/auth');
 const questionRoutes = require('./routes/question');
 const progressRoutes = require('./routes/progress');
 const statsRoutes = require('./routes/statistics');
+
+app.use(cors({
+    origin : "http://localhost:5173",
+}));
 
 app.use(express.json());
 

@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { register } from "../api/authapi";
+import { useNavigate } from "react-router-dom";
 
 import {
     Card,
@@ -16,15 +18,30 @@ function Register() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loading,setLoading] = useState(false);
 
-    const handleSubmit = (e) => {
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        console.log({
-            name,
-            email,
-            password,
-        });
+        try {
+            setLoading(true);
+            await register({
+                name,
+                email,
+                password
+            });
+
+            alert("Registration Successful");
+
+            navigate('/login');
+        } catch (error) {
+            console.log(error);
+            alert(error.response?.data?.message || "Registration Failed");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -97,8 +114,9 @@ function Register() {
                         <Button
                             type="submit"
                             className="w-full bg-purple-500 text-white hover:bg-purple-400"
+                            disabled={loading}
                         >
-                            Create Account
+                            {loading ? "Creating Account" : "Create Account"}
                         </Button>
 
                         <p className="text-center text-sm text-gray-300">
