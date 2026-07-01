@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { register } from "../api/authapi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 
 import {
     Card,
@@ -18,7 +18,7 @@ function Register() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [loading,setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
 
@@ -121,9 +121,12 @@ function Register() {
 
                         <p className="text-center text-sm text-gray-300">
                             Already have an account?{" "}
-                            <span className="cursor-pointer text-cyan-400 hover:text-cyan-300">
+                            <Link
+                                to="/login"
+                                className="text-cyan-400 hover:text-cyan-300"
+                            >
                                 Login
-                            </span>
+                            </Link>
                         </p>
                     </form>
                 </CardContent>

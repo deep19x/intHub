@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { login } from "../api/authapi";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import {
     Card,
@@ -15,14 +18,32 @@ import { Button } from "@/components/ui/button";
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
 
-    const handleSubmit = (e) => {
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        console.log({
-            email,
-            password,
-        });
+        try {
+            setLoading(true);
+
+            const response = await login({
+                email,
+                password
+            });
+
+            localStorage.setItem('token', response.data.token);
+
+            alert("Login Successful");
+
+            navigate('/dashboard');
+        } catch (error) {
+            console.log(error);
+            alert(error.response?.data?.message || "Login Failed");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -84,16 +105,20 @@ function Login() {
 
                         <Button
                             type="submit"
-                            className="w-full bg-cyan-500 text-black hover:bg-cyan-400"
+                            className="w-full bg-purple-500 text-white hover:bg-purple-400"
+                            disabled={loading}
                         >
-                            Login
+                            {loading ? "Loggin..." : "Login"}
                         </Button>
 
                         <p className="text-center text-sm text-gray-300">
                             Don't have an account?{" "}
-                            <span className="cursor-pointer text-cyan-400 hover:text-cyan-300">
+                            <Link
+                                to="/register"
+                                className="text-cyan-400 hover:text-cyan-300"
+                            >
                                 Register
-                            </span>
+                            </Link>
                         </p>
                     </form>
                 </CardContent>
