@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { login } from "../api/authapi";
+import { login,getMe } from "../api/authapi";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/authContext";
 
 import {
     Card,
@@ -22,6 +23,8 @@ function Login() {
 
     const navigate = useNavigate();
 
+    const {setUser} = useAuth();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -34,6 +37,10 @@ function Login() {
             });
 
             localStorage.setItem('token', response.data.token);
+
+            const me = await getMe();
+
+            setUser(me.data);
 
             alert("Login Successful");
 
