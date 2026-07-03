@@ -1,7 +1,9 @@
+import Navbar from "../components/layout/Navbar";
+
 function Dashboard() {
     return (
         <div>
-            Dashboard Page
+            <Navbar/>
         </div>
     )
 };
