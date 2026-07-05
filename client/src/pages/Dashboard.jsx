@@ -20,13 +20,8 @@ function Dashboard() {
         const fetchDashboard = async () => {
             try {
                 const response = await getDashboardStats();
-
-                console.log("SUCCESS");
-                console.log(response.data);
-
                 setDashboardStats(response.data);
             } catch (error) {
-                console.log("FAILED");
                 console.log(error);
             }
         };
