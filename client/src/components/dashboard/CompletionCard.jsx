@@ -7,7 +7,7 @@ import {
 
 import { Progress } from "@/components/ui/progress";
 
-function CompletionCard() {
+function CompletionCard({value,solved,total}) {
     return (
         <Card>
             <CardHeader>
@@ -21,14 +21,14 @@ function CompletionCard() {
                     </span>
 
                     <span className="font-bold">
-                        40%
+                        {value}%
                     </span>
                 </div>
 
-                <Progress value={40} />
+                <Progress value={value} />
 
                 <p className="text-sm text-muted-foreground">
-                    You've solved 12 of 30 questions.
+                    You've solved {solved} of {total} questions.
                 </p>
             </CardContent>
         </Card>
