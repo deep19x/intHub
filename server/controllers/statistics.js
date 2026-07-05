@@ -67,6 +67,7 @@ const getDashboardStats = async (req, res) => {
         return res.status(200).json({
             overallStats,
             difficultyStats,
+            topicStats,
             weakTopics,
             message
         });

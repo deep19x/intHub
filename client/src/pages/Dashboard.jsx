@@ -1,8 +1,11 @@
+import { useState, useEffect } from "react";
+
 import Navbar from "../components/layout/Navbar";
 import StatCard from "../components/dashboard/StatCard";
 import CompletionCard from "../components/dashboard/CompletionCard";
-import { getOverallStats } from "../api/statsapi";
-import { useState, useEffect } from "react";
+import RecommendationCard from "../components/dashboard/RecommendationCard";
+
+import { getDashboardStats } from "../api/statsapi";
 
 import {
     BadgeQuestionMark,
@@ -10,22 +13,33 @@ import {
     Flag,
 } from "lucide-react";
 
-
 function Dashboard() {
-    const [stats,setStats] = useState({});
-    
-    useEffect(() => {
-        const fetchStats = async() => {
-            try {
-                const response = await getOverallStats();
-                setStats(response.data);
-            } catch (error) {
-                console.error(error);
-            }
-        }
+    const [dashboardStats, setDashboardStats] = useState(null);
 
-        fetchStats();
-    },[]);
+    useEffect(() => {
+        const fetchDashboard = async () => {
+            try {
+                const response = await getDashboardStats();
+
+                console.log("SUCCESS");
+                console.log(response.data);
+
+                setDashboardStats(response.data);
+            } catch (error) {
+                console.log("FAILED");
+                console.log(error);
+            }
+        };
+
+        fetchDashboard();
+    }, []);
+
+    if (!dashboardStats) {
+        return <div>Loading...</div>;
+    }
+
+    const { overallStats, weakTopics, message } = dashboardStats;
+
     return (
         <>
             <Navbar />
@@ -39,21 +53,21 @@ function Dashboard() {
                 <div className="grid gap-6 mt-8 md:grid-cols-2 xl:grid-cols-3">
                     <StatCard
                         title="Total Questions"
-                        value={stats.total}
+                        value={overallStats.total}
                         icon={<BadgeQuestionMark size={22} />}
                         description="Questions available"
                     />
 
                     <StatCard
                         title="Solved"
-                        value={stats.solved}
+                        value={overallStats.solved}
                         icon={<CircleCheckBig size={22} />}
                         description="Questions solved"
                     />
 
                     <StatCard
                         title="Attempted"
-                        value={stats.attempted}
+                        value={overallStats.attempted}
                         icon={<Flag size={22} />}
                         description="Questions attempted"
                     />
@@ -61,7 +75,19 @@ function Dashboard() {
 
                 {/* Overall Progress */}
                 <div className="mt-8">
-                    <CompletionCard value={stats.completionPercentage} solved={stats.solved} total={stats.total}/>
+                    <CompletionCard
+                        value={overallStats.completionPercentage}
+                        solved={overallStats.solved}
+                        total={overallStats.total}
+                    />
+                </div>
+
+                {/* AI Coach */}
+                <div className="mt-8">
+                    <RecommendationCard
+                        weakTopics={weakTopics}
+                        message={message}
+                    />
                 </div>
             </main>
         </>
