@@ -4,6 +4,7 @@ import Navbar from "../components/layout/Navbar";
 import StatCard from "../components/dashboard/StatCard";
 import CompletionCard from "../components/dashboard/CompletionCard";
 import RecommendationCard from "../components/dashboard/RecommendationCard";
+import WeakTopicsCard from "../components/dashboard/WeakTopicsCard";
 
 import { getDashboardStats } from "../api/statsapi";
 
@@ -33,7 +34,17 @@ function Dashboard() {
         return <div>Loading...</div>;
     }
 
-    const { overallStats, weakTopics, message } = dashboardStats;
+    const { overallStats, topicStats,weakTopics, message } = dashboardStats;
+
+    const topicsEntries = Object.entries(topicStats);
+
+    const weakTopicsFilter = topicsEntries.filter(([topic,stats]) => {
+        return stats.completionPercentage < 30
+    });
+
+    const top5weakTopicsFilter = weakTopicsFilter.sort((a,b) => {
+        return a[1].completionPercentage - b[1].completionPercentage;
+    }).slice(0,5);
 
     return (
         <>
@@ -78,11 +89,12 @@ function Dashboard() {
                 </div>
 
                 {/* AI Coach */}
-                <div className="mt-8">
+                <div className="mt-8 grid gap-6 lg:grid-cols-2">
                     <RecommendationCard
                         weakTopics={weakTopics}
                         message={message}
                     />
+                    <WeakTopicsCard weakTopics={top5weakTopicsFilter}/>
                 </div>
             </main>
         </>
