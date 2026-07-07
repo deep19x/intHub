@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { getQuestions } from "../api/questionsapi";
 import QuestionCard from "../components/questions/QuestionCard";
+import Navbar from "../components/layout/Navbar";
 import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 function Questions() {
     const [questions, setQuestions] = useState([]);
+    const [selectedCompany, setSelectedCompany] = useState("All");
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -35,16 +38,32 @@ function Questions() {
         return <h2>{error}</h2>;
     }
 
-    const filteredQuestions = questions.filter((question) => {
-        if (!search.trim()) return true;
+    const companies = [
+        "All",
+        ...new Set(
+            questions.flatMap((question) => question.companies)
+        ),
+    ];
 
-        return question.title
-            .toLowerCase()
-            .split(" ")
-            .some(word => word.startsWith(search.toLowerCase()));
+    const filteredQuestions = questions.filter((question) => {
+        const matchesSearch =
+            !search.trim() ||
+            question.title
+                .toLowerCase()
+                .split(" ")
+                .some((word) => word.startsWith(search.toLowerCase()));
+
+        const matchesCompany =
+            selectedCompany === "All" ||
+            question.companies.includes(selectedCompany);
+
+        return matchesSearch && matchesCompany;
     });
 
     return (
+        
+        <>
+        <Navbar/>
         <div className="max-w-7xl mx-auto p-6 ">
 
             <div className="mb-8">
@@ -61,6 +80,23 @@ function Questions() {
                 />
             </div>
 
+            <div className="flex flex-wrap gap-3 mb-6">
+                {companies.map((company) => (
+                    <Button
+                        className={
+                            selectedCompany === company
+                                ? "rounded-full bg-slate-900 text-white hover:bg-slate-800"
+                                : "rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200"
+                        }
+                        key={company}
+                        variant="outline"
+                        onClick={() => setSelectedCompany(company)}
+                    >
+                        {company}
+                    </Button>
+                ))}
+            </div>
+
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {filteredQuestions.map((question) => (
                     <QuestionCard
@@ -70,6 +106,8 @@ function Questions() {
                 ))}
             </div>
         </div>
+
+        </>
     );
 }
 
