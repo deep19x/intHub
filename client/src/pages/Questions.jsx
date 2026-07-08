@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 function Questions() {
     const [questions, setQuestions] = useState([]);
     const [selectedCompany, setSelectedCompany] = useState("All");
+    const [selectedDifficulty,setSelectedDifficulty] = useState("All");
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -45,6 +46,13 @@ function Questions() {
         ),
     ];
 
+    const difficulties = [
+        "All",
+        "Easy",
+        "Medium",
+        "Hard"
+    ];
+
     const filteredQuestions = questions.filter((question) => {
         const matchesSearch =
             !search.trim() ||
@@ -57,7 +65,11 @@ function Questions() {
             selectedCompany === "All" ||
             question.companies.includes(selectedCompany);
 
-        return matchesSearch && matchesCompany;
+        const matchesDifficulty =
+            selectedDifficulty === "All" ||
+            question.difficulty === selectedDifficulty;
+
+        return matchesSearch && matchesCompany && matchesDifficulty;
     });
 
     return (
@@ -93,6 +105,23 @@ function Questions() {
                         onClick={() => setSelectedCompany(company)}
                     >
                         {company}
+                    </Button>
+                ))}
+            </div>
+
+            <div className="flex flex-wrap gap-3 mb-6">
+                {difficulties.map((difficulty) => (
+                    <Button
+                        className={
+                            selectedDifficulty === difficulty 
+                            ? "rounded-full bg-slate-900 text-white hover:bg-slate-800"
+                            : "rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200"
+                        }
+                        key={difficulty}
+                        variant="outline"
+                        onClick={() => setSelectedDifficulty(difficulty)}
+                    >
+                        {difficulty}
                     </Button>
                 ))}
             </div>
