@@ -6,13 +6,21 @@ const UserProgress = require('../models/userProgress');
 const connectDB = require('../config/dbConnect');
 
 async function seed(){
-    await connectDB();
-    await Question.deleteMany();
-    await UserProgress.deleteMany();
-    await Question.insertMany(questions);
+    try {
+        await connectDB();
 
-    console.log('Questions inserted.');
-    process.exit();
+        await Question.deleteMany({});
+        await UserProgress.deleteMany({});
+
+        await Question.insertMany(questions);
+
+        console.log("Questions inserted successfully!");
+
+        process.exit(0);
+    } catch (error) {
+        console.error(error);
+        process.exit(1);
+    }
 }
 
 seed();
