@@ -4,6 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";
+import QuestionDetails from './pages/QuestionDetail';
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route path="/questions" element={<Questions/>}/>
         <Route path="/profile" element={<Profile/>}/>
         <Route path="/dashboard" element={<Dashboard/>}/>
+        <Route path='/questions/:id' element={<QuestionDetails/>}/>
       </Routes>
     </BrowserRouter>
   );

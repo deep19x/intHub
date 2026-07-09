@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/button";
 
 import { Badge } from "@/components/ui/badge";
 
+import { Link } from "react-router-dom";
+
 function QuestionCard({ question }) {
     let difficultyClass = "";
 
@@ -44,7 +46,11 @@ function QuestionCard({ question }) {
 
                 {/* Open Button */}
                 <div className="flex justify-end">
-                    <Button className='bg-slate-900 hover:bg-slate-800 cursor-pointer'>Solve →</Button>
+                    <Button className='bg-slate-900 hover:bg-slate-800 cursor-pointer' asChild>
+                        <Link to={`/questions/${question._id}`}>
+                            Open
+                        </Link>
+                    </Button>
                 </div>
             </CardContent>
         </Card>
