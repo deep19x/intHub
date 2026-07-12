@@ -22,152 +22,159 @@ import {
 } from "lucide-react";
 function QuestionInfo({ questionDetails, handleLeetCode }) {
     return (
-        <div className="max-w-7xl mx-auto px-6 py-8">
+        <div className="sticky top-24">
+            <Card className='shadow-lg rounded-xl border'>
+                <CardContent className='p-5'>
+                    <div className="space-y-5">
 
-            {/* Back */}
-            <Link
-                to="/questions"
-                className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground"
-            >
-                <ArrowLeft className="h-4 w-4" />
-                Back to Questions
-            </Link>
-
-            {/* Title */}
-            <h1 className="mt-6 text-3xl md:text-4xl font-bold tracking-tight">
-                {questionDetails.title}
-            </h1>
-
-            {/* Difficulty & Topic */}
-            <div className="flex flex-wrap gap-3 mt-5">
-
-                <Badge
-                    className={
-                        questionDetails.difficulty === "Easy"
-                            ? "bg-green-600 hover:bg-green-700 text-white"
-                            : questionDetails.difficulty === "Medium"
-                                ? "bg-yellow-500 hover:bg-yellow-600 text-black"
-                                : "bg-red-600 hover:bg-red-700 text-white"
-                    }
-                >
-                    {questionDetails.difficulty}
-                </Badge>
-
-                <Badge className="bg-purple-600 hover:bg-purple-700 text-white">
-                    {questionDetails.topic}
-                </Badge>
-
-            </div>
-
-            {/* Companies */}
-            <div className="flex flex-wrap gap-2 mt-5">
-                {questionDetails.companies?.map((company) => (
-                    <Badge
-                        key={company}
-                        className="bg-blue-600 hover:bg-blue-700 text-white"
-                    >
-                        {company}
-                    </Badge>
-                ))}
-            </div>
-
-            <hr className="my-10 border-border" />
-
-            {/* What You'll Learn */}
-            <section>
-
-                <h2 className="flex items-center gap-2 text-2xl font-semibold mb-5">
-                    <BookOpen className="h-6 w-6 text-primary" />
-                    What You'll Learn
-                </h2>
-
-                <ul className="space-y-4">
-
-                    {questionDetails.whatYouWillLearn?.map((item) => (
-
-                        <li
-                            key={item}
-                            className="flex items-center gap-3 text-lg"
+                        {/* Back */}
+                        <Link
+                            to="/questions"
+                            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground"
                         >
-                            <CheckCircle2 className="h-5 w-5 text-green-500" />
-                            {item}
-                        </li>
+                            <ArrowLeft className="h-4 w-4" />
+                            Back to Questions
+                        </Link>
 
-                    ))}
+                        {/* Title */}
+                        <h1 className="mt-4 text-2xl font-bold tracking-tight">
+                            {questionDetails.title}
+                        </h1>
 
-                </ul>
+                        {/* Difficulty & Topic */}
+                        <div className="flex flex-wrap gap-2 mt-3">
 
-            </section>
+                            <Badge
+                                className={
+                                    questionDetails.difficulty === "Easy"
+                                        ? "bg-green-600 hover:bg-green-700 text-white"
+                                        : questionDetails.difficulty === "Medium"
+                                            ? "bg-yellow-500 hover:bg-yellow-600 text-black"
+                                            : "bg-red-600 hover:bg-red-700 text-white"
+                                }
+                            >
+                                {questionDetails.difficulty}
+                            </Badge>
 
-            <hr className="my-10 border-border" />
+                            <Badge className="bg-purple-600 hover:bg-purple-700 text-white">
+                                {questionDetails.topic}
+                            </Badge>
 
-            {/* Patterns */}
-            <section>
+                        </div>
 
-                <h2 className="flex items-center gap-2 text-2xl font-semibold mb-5">
-                    <Brain className="h-6 w-6 text-primary" />
-                    Patterns
-                </h2>
+                        {/* Companies */}
+                        <div className="flex flex-wrap gap-2 mt-3">
+                            {questionDetails.companies?.map((company) => (
+                                <Badge
+                                    key={company}
+                                    className="bg-blue-600 hover:bg-blue-700 text-white"
+                                >
+                                    {company}
+                                </Badge>
+                            ))}
+                        </div>
 
-                <div className="flex flex-wrap gap-2">
+                        <Separator className="my-5" />
 
-                    {questionDetails.patterns?.map((pattern) => (
+                        {/* What You'll Learn */}
+                        <section>
 
-                        <Badge
-                            key={pattern}
-                            variant="outline"
-                        >
-                            {pattern}
-                        </Badge>
+                            <h2 className="flex items-center gap-2 text-lg font-semibold mb-3">
+                                <BookOpen className="h-6 w-6 text-primary" />
+                                What You'll Learn
+                            </h2>
 
-                    ))}
+                            <ul className="space-y-2">
 
-                </div>
+                                {questionDetails.whatYouWillLearn?.map((item) => (
 
-            </section>
+                                    <li
+                                        key={item}
+                                        className="flex items-center gap-2 text-sm"
+                                    >
+                                        <CheckCircle2 className="h-4 w-4 mt-0.5 text-green-500 shrink-0" />
+                                        {item}
+                                    </li>
 
-            <hr className="my-10 border-border" />
+                                ))}
 
-            {/* Estimated Time */}
-            <section>
+                            </ul>
 
-                <h2 className="flex items-center gap-2 text-2xl font-semibold mb-4">
-                    <Clock className="h-6 w-6 text-primary" />
-                    Estimated Time
-                </h2>
+                        </section>
 
-                <p className="text-lg text-muted-foreground">
-                    {questionDetails.estimatedTime} Minutes
-                </p>
+                        <Separator className="my-5" />
 
-            </section>
+                        {/* Patterns */}
+                        <section>
 
-            <hr className="my-10 border-border" />
+                            <h2 className="flex items-center gap-2 text-lg font-semibold mb-3">
+                                <Brain className="h-6 w-6 text-primary" />
+                                Patterns
+                            </h2>
 
-            {/* CTA */}
+                            <div className="flex flex-wrap gap-2">
 
-            <section className="rounded-xl border bg-card p-8 text-center">
+                                {questionDetails.patterns?.map((pattern) => (
 
-                <h2 className="text-2xl font-bold">
-                    Ready to Solve?
-                </h2>
+                                    <Badge
+                                        key={pattern}
+                                        variant="outline"
+                                    >
+                                        {pattern}
+                                    </Badge>
 
-                <p className="text-muted-foreground mt-3 mb-6 max-w-xl mx-auto">
-                    Solve this problem on LeetCode and come back to InTHub
-                    for hints, AI review, notes and revision.
-                </p>
+                                ))}
 
-                <Button
-                    onClick={() => handleLeetCode()}
-                    size="lg"
-                >
-                    Open on LeetCode
-                    <ExternalLink className="ml-2 h-4 w-4" />
+                            </div>
 
-                </Button>
+                        </section>
 
-            </section>
+                        <Separator className="my-5" />
 
+                        {/* Estimated Time */}
+                        <section>
+
+                            <h2 className="flex items-center gap-2 text-lg font-semibold mb-3">
+                                <Clock className="h-6 w-6 text-primary" />
+                                Estimated Time
+                            </h2>
+
+                            <Badge variant="secondary">
+                                {questionDetails.estimatedTime} mins
+                            </Badge>
+
+                        </section>
+
+                        <Separator className="my-5" />
+
+                        {/* CTA */}
+
+                        <section className="rounded-xl border bg-muted/20 p-5 text-center">
+
+                            <h2 className="text-lg font-semibold">
+                                Ready to Solve?
+                            </h2>
+
+                            <p className="text-sm text-muted-foreground mt-2 mb-4">
+                                Solve this problem on LeetCode and come back to InTHub
+                                for hints, AI review, notes and revision.
+                            </p>
+
+                            <Button
+                                onClick={() => handleLeetCode()}
+                                size="lg"
+                                className='w-full'
+                            >
+                                Open on LeetCode
+                                <ExternalLink className="ml-2 h-4 w-4" />
+
+                            </Button>
+
+                        </section>
+
+                    </div>
+                </CardContent>
+            </Card>
         </div>
     )
 }

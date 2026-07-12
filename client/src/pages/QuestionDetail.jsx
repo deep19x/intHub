@@ -37,27 +37,35 @@ function QuestionDetails() {
     return (
         <>
             <Navbar />
-            {!workspaceOpen ? (
-                <QuestionInfo
-                    questionDetails={questionDetails}
-                    handleLeetCode={handleLeetCode}
-                />
-            ) : (
-                <div className="max-w-7xl mx-auto p-6 grid grid-cols-12 gap-6">
+            <div className="max-w-7xl mx-auto px-6 py-8">
 
-                    <div className="col-span-4">
-                        <QuestionInfo
-                            questionDetails={questionDetails}
-                            handleLeetCode={handleLeetCode}
-                        />
+                {!workspaceOpen ? (
+
+                    <QuestionInfo
+                        questionDetails={questionDetails}
+                        handleLeetCode={handleLeetCode}
+                    />
+
+                ) : (
+
+                    <div className="grid grid-cols-12 gap-6">
+
+                        <div className="col-span-4">
+                            <QuestionInfo
+                                questionDetails={questionDetails}
+                                handleLeetCode={handleLeetCode}
+                            />
+                        </div>
+
+                        <div className="col-span-8">
+                            <LearningWorkspace />
+                        </div>
+
                     </div>
 
-                    <div className="col-span-8">
-                        <LearningWorkspace />
-                    </div>
+                )}
 
-                </div>
-            )}
+            </div>
 
 
         </>
