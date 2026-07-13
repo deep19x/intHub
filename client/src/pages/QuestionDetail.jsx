@@ -48,17 +48,30 @@ function QuestionDetails() {
 
                 ) : (
 
-                    <div className="grid grid-cols-12 gap-6">
+                    <div className="grid grid-cols-12 gap-6 items-start">
 
-                        <div className="col-span-4">
-                            <QuestionInfo
-                                questionDetails={questionDetails}
-                                handleLeetCode={handleLeetCode}
-                            />
+                        {/* Left Panel */}
+                        <div className="col-span-4 relative">
+
+                            <div className="fixed top-20 w-[370px]">
+
+                                <QuestionInfo
+                                    questionDetails={questionDetails}
+                                    handleLeetCode={handleLeetCode}
+                                />
+
+                            </div>
+
                         </div>
 
-                        <div className="col-span-8">
-                            <LearningWorkspace questionDetails={questionDetails}/>
+                        {/* Right Panel */}
+
+                        <div className="col-span-8 col-start-5">
+
+                            <LearningWorkspace
+                                questionDetails={questionDetails}
+                            />
+
                         </div>
 
                     </div>
