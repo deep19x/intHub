@@ -18,9 +18,8 @@ import {
     ChevronRight,
 } from "lucide-react";
 
-function HelpView({ questionDetails, setMode }) {
+function HelpView({ questionDetails, setMode,setStep,step}) {
 
-    const [step, setStep] = useState(0);
 
     return (
         <Card className="rounded-xl shadow-md min-h-175">

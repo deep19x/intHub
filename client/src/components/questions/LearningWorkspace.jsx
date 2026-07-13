@@ -4,6 +4,7 @@ import HelpView from "./learningWorkspace/HelpView";
 import SolvedView from "./learningWorkspace/SolvedView";
 function LearningWorkspace({questionDetails}) {
     const [mode,setMode] = useState("choice");
+    const [helpStep,setHelpStep] = useState(0);
     return (
         <>
             {mode === "choice" && (
@@ -11,7 +12,7 @@ function LearningWorkspace({questionDetails}) {
             )}
 
             {mode === "help" && (
-                <HelpView questionDetails={questionDetails} setMode={setMode}/>
+                <HelpView questionDetails={questionDetails} setMode={setMode} setStep={setHelpStep} step={helpStep}/>
             )}
 
             {mode === "solved" && (
