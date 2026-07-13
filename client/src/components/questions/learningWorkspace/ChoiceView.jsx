@@ -13,7 +13,7 @@ import {
 
 function ChoiceView({ setMode }) {
     return (
-        <Card className="rounded-xl shadow-md min-h-[700px]">
+        <Card className="rounded-xl shadow-md min-h-175">
 
             <CardHeader className="border-b">
                 <CardTitle className="flex items-center gap-2 text-2xl">

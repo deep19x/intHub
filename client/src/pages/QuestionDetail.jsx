@@ -58,7 +58,7 @@ function QuestionDetails() {
                         </div>
 
                         <div className="col-span-8">
-                            <LearningWorkspace />
+                            <LearningWorkspace questionDetails={questionDetails}/>
                         </div>
 
                     </div>
