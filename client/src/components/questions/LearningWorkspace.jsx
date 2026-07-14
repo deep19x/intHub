@@ -16,7 +16,7 @@ function LearningWorkspace({questionDetails}) {
             )}
 
             {mode === "solved" && (
-                <SolvedView setMode={setMode}/>
+                <SolvedView setMode={setMode} questionDetails={questionDetails}/>
             )}
         </>
     )

@@ -9,6 +9,7 @@ const authRoutes = require('./routes/auth');
 const questionRoutes = require('./routes/question');
 const progressRoutes = require('./routes/progress');
 const statsRoutes = require('./routes/statistics');
+const aiRoutes = require('./routes/ai');
 
 app.use(cors({
     origin : "http://localhost:5173",
@@ -23,6 +24,7 @@ app.use('/api/auth',authRoutes);
 app.use('/api/questions',questionRoutes);
 app.use('/api/progress',progressRoutes);
 app.use('/api/stats',statsRoutes);
+app.use('/api/ai',aiRoutes);
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT,()=>{

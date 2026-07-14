@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { reviewSolution } from "../../../api/aiapi";
 
 import Editor from "@monaco-editor/react";
 
@@ -46,20 +47,32 @@ public:
 }`
 };
 
-function SolvedView({ setMode }) {
+function SolvedView({ setMode, questionDetails }) {
 
     const [language, setLanguage] = useState("cpp");
     const [code, setCode] = useState(starterCode.cpp);
+    const [review, setReview] = useState(null);
     const [reviewing, setReviewing] = useState(false);
     const [reviewDone, setReviewDone] = useState(false);
 
-    const handleSubmit = () => {
-        setReviewing(true);
+    const handleSubmit = async () => {
+        try {
+            setReviewing(true);
 
-        setTimeout(() => {
-            setReviewing(false);
+            const response = await reviewSolution({
+                questionId: questionDetails._id,
+                language,
+                code
+            });
+
+            setReview(response.data.review);
+
             setReviewDone(true);
-        }, 2000);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setReviewing(false);
+        }
     };
 
     return (
@@ -185,20 +198,24 @@ function SolvedView({ setMode }) {
                             <CardContent className="space-y-4">
 
                                 <div>
-                                    ✅ Correctness: Looks Good
+                                    ✅ Correctness: {review?.correctness}
                                 </div>
 
                                 <div>
-                                    ⚡ Time Complexity: O(n)
+                                    ⚡ Time Complexity: {review?.timeComplexity}
                                 </div>
 
                                 <div>
-                                    💾 Space Complexity: O(1)
+                                    💾 Space Complexity: {review?.spaceComplexity}
                                 </div>
 
                                 <div>
                                     💡 Optimization:
-                                    Great solution. Variable names can be improved.
+                                    <ul className="list-disc ml-6 mt-2">
+                                        {review?.optimization?.map((item, index) => (
+                                            <li key={index}>{item}</li>
+                                        ))}
+                                    </ul>
                                 </div>
 
                             </CardContent>

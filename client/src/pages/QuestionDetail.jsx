@@ -53,7 +53,7 @@ function QuestionDetails() {
                         {/* Left Panel */}
                         <div className="col-span-4 relative">
 
-                            <div className="fixed top-20 w-[370px]">
+                            <div className="fixed top-20 w-92.5">
 
                                 <QuestionInfo
                                     questionDetails={questionDetails}
