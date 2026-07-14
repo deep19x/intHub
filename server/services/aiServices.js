@@ -1,17 +1,29 @@
-export const reviewCode = async ({ questionId, language, code }) => {
+const Groq = require("groq-sdk");
+
+const groq = new Groq({
+    apiKey: process.env.GROQ_API_KEY,
+});
+
+exports.reviewCode = async ({ questionId, language, code }) => {
+
+    const response = await groq.chat.completions.create({
+        model: "llama-3.3-70b-versatile",
+        messages: [
+            {
+                role: "user",
+                content: "Say hello in one sentence."
+            }
+        ]
+    });
+
+    console.log(response.choices[0].message.content);
+
     return {
-        correctness: "The solution appears to be correct.",
-        timeComplexity: "O(n)",
-        spaceComplexity: "O(1)",
-        optimization: [
-            "Use more descriptive variable names.",
-            "Handle edge cases explicitly.",
-        ],
-        edgeCases: [
-            "Empty input",
-            "Single element",
-            "Duplicate values",
-        ],
-        rating: 8,
+        correctness: response.choices[0].message.content,
+        timeComplexity: "",
+        spaceComplexity: "",
+        optimization: [],
+        edgeCases: [],
+        rating: 10
     };
 };
