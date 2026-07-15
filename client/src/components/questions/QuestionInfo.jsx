@@ -15,8 +15,8 @@ import {
 
 function QuestionInfo({ questionDetails, handleLeetCode }) {
     return (
-        <Card className="shadow-lg rounded-xl border">
-            <CardContent className="p-5">
+        <Card className="h-full shadow-lg rounded-xl border">
+            <CardContent className="h-full overflow-y-auto p-5 pr-3">
                 <div className="space-y-5">
 
                     <Link
@@ -61,6 +61,47 @@ function QuestionInfo({ questionDetails, handleLeetCode }) {
                             </Badge>
                         ))}
                     </div>
+
+                    <section>
+
+                        <h2 className="flex items-center gap-2 text-lg font-semibold mb-3">
+                            <BookOpen className="h-5 w-5 text-primary" />
+                            Description
+                        </h2>
+
+                        <p className="text-sm leading-7 text-muted-foreground whitespace-pre-line">
+                            {questionDetails.description}
+                        </p>
+
+                    </section>
+
+                    <section>
+
+                        <h2 className="text-lg font-semibold mb-3">
+                            Constraints
+                        </h2>
+
+                        <ul className="space-y-2">
+
+                            {questionDetails.constraints
+                                ?.split(",")
+                                .map((constraint, index) => (
+
+                                    <li
+                                        key={index}
+                                        className="flex items-start gap-2 text-sm"
+                                    >
+                                        <CheckCircle2 className="h-4 w-4 mt-1 text-green-500 shrink-0" />
+
+                                        <span>{constraint.trim()}</span>
+
+                                    </li>
+
+                                ))}
+
+                        </ul>
+
+                    </section>
 
                     <Separator />
 

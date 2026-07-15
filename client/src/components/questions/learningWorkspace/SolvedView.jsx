@@ -195,28 +195,121 @@ function SolvedView({ setMode, questionDetails }) {
                                 </CardTitle>
                             </CardHeader>
 
-                            <CardContent className="space-y-4">
+                            <CardContent className="space-y-6">
 
-                                <div>
-                                    ✅ Correctness: {review?.correctness}
+                                <div className="rounded-lg border bg-muted/40 p-4">
+
+                                    <p className="text-sm text-muted-foreground">
+                                        Overall Rating
+                                    </p>
+
+                                    <h2 className="text-3xl font-bold mt-1">
+                                        ⭐ {review?.rating}/10
+                                    </h2>
+
                                 </div>
 
-                                <div>
-                                    ⚡ Time Complexity: {review?.timeComplexity}
+                                <div className="rounded-lg border p-4">
+
+                                    <h3 className="flex items-center gap-2 text-lg font-semibold">
+                                        ✅ Correctness
+                                    </h3>
+
+                                    <p className="mt-2 text-muted-foreground leading-7">
+                                        {review?.correctness}
+                                    </p>
+
                                 </div>
 
-                                <div>
-                                    💾 Space Complexity: {review?.spaceComplexity}
+                                <div className="rounded-lg border p-4">
+
+                                    <h3 className="flex items-center gap-2 text-lg font-semibold">
+                                        ⚡ Complexity Analysis
+                                    </h3>
+
+                                    <div className="mt-4 space-y-2">
+
+                                        <div className="flex justify-between">
+                                            <span className="text-muted-foreground">
+                                                Time Complexity
+                                            </span>
+
+                                            <span className="font-medium">
+                                                {review?.timeComplexity}
+                                            </span>
+                                        </div>
+
+                                        <div className="flex justify-between">
+                                            <span className="text-muted-foreground">
+                                                Space Complexity
+                                            </span>
+
+                                            <span className="font-medium">
+                                                {review?.spaceComplexity}
+                                            </span>
+                                        </div>
+
+                                    </div>
+
                                 </div>
 
-                                <div>
-                                    💡 Optimization:
-                                    <ul className="list-disc ml-6 mt-2">
+                                <div className="rounded-lg border p-4">
+
+                                    <h3 className="flex items-center gap-2 text-lg font-semibold">
+                                        💡 Optimization Suggestions
+                                    </h3>
+
+                                    <ul className="mt-4 space-y-3">
+
                                         {review?.optimization?.map((item, index) => (
-                                            <li key={index}>{item}</li>
+
+                                            <li
+                                                key={index}
+                                                className="flex items-start gap-3"
+                                            >
+                                                <span className="mt-1 text-yellow-500">•</span>
+
+                                                <span className="text-muted-foreground leading-7">
+                                                    {item}
+                                                </span>
+
+                                            </li>
+
                                         ))}
+
                                     </ul>
+
                                 </div>
+
+                                {review?.edgeCases?.length > 0 && (
+                                    <div className="rounded-lg border p-4">
+
+                                        <h3 className="flex items-center gap-2 text-lg font-semibold">
+                                            ⚠️ Edge Cases to Test
+                                        </h3>
+
+                                        <ul className="mt-4 space-y-3">
+
+                                            {review.edgeCases.map((item, index) => (
+
+                                                <li
+                                                    key={index}
+                                                    className="flex items-start gap-3"
+                                                >
+                                                    <span className="mt-1 text-red-500">•</span>
+
+                                                    <span className="text-muted-foreground leading-7">
+                                                        {item}
+                                                    </span>
+
+                                                </li>
+
+                                            ))}
+
+                                        </ul>
+
+                                    </div>
+                                )}
 
                             </CardContent>
 

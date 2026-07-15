@@ -51,9 +51,9 @@ function QuestionDetails() {
                     <div className="grid grid-cols-12 gap-6 items-start">
 
                         {/* Left Panel */}
-                        <div className="col-span-4 relative">
+                        <div className="col-span-4">
 
-                            <div className="fixed top-20 w-92.5">
+                            <div className="sticky top-20 h-[calc(100vh-6rem)]">
 
                                 <QuestionInfo
                                     questionDetails={questionDetails}
