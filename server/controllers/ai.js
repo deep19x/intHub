@@ -11,6 +11,7 @@ const reviewSolution = async(req,res) => {
         }
 
         const review = await reviewCode({
+            userId:req.user.userId,
             questionId,
             language,
             code

@@ -6,8 +6,9 @@ const groq = new Groq({
 
 const Question = require("../models/question");
 const buildReviewPrompt = require("../util/promptBuilder");
+const Submission = require('../models/submission');
 
-exports.reviewCode = async ({ questionId, language, code }) => {
+exports.reviewCode = async ({ userId,questionId, language, code }) => {
 
     const question = await Question.findById(questionId);
 
@@ -39,6 +40,14 @@ exports.reviewCode = async ({ questionId, language, code }) => {
 
     try {
         const review = JSON.parse(response.choices[0].message.content);
+
+        await Submission.create({
+            user : userId,
+            question : questionId,
+            language,
+            code,
+            aiReview:review,
+        });
         return review;
     } catch (error) {
         console.error("Failed to parse AI response:", error);
