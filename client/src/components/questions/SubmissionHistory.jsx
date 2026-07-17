@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
-import { getSubmissions } from "@/api/submissionapi";
+import { useState } from "react";
+import SubmissionDetailsDialog from "./SubmissionDetailsDialog";
+import { getSubmissionDetails } from "../../api/submissionapi";
 
 import {
     Card,
@@ -14,7 +15,22 @@ import { Separator } from "@/components/ui/separator";
 import { History, Star } from "lucide-react";
 
 function SubmissionHistory({ submissions }) {
+    const [selectedSubmission, setSelectedSubmission] = useState(null);
+    const [dialogOpen, setDialogOpen] = useState(false);
 
+    const handleSubmissionClick = async (submissionId) => {
+        try {
+
+            const response = await getSubmissionDetails(submissionId);
+
+            setSelectedSubmission(response.data.submission);
+
+            setDialogOpen(true);
+
+        } catch (error) {
+            console.error(error);
+        }
+    };
     return (
         <Card className="mt-6 shadow-lg rounded-xl">
 
@@ -39,7 +55,8 @@ function SubmissionHistory({ submissions }) {
 
                         {submissions.map((submission, index) => (
 
-                            <div key={submission._id}>
+                            <div key={submission._id} onClick={() => handleSubmissionClick(submission._id)}
+                                className="cursor-pointer rounded-lg p-3 hover:bg-muted transition-colors">
 
                                 <div className="flex items-center justify-between">
 
@@ -80,6 +97,12 @@ function SubmissionHistory({ submissions }) {
                 )}
 
             </CardContent>
+
+            <SubmissionDetailsDialog
+                open={dialogOpen}
+                onOpenChange={setDialogOpen}
+                submission={selectedSubmission}
+            />
 
         </Card>
     );
