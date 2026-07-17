@@ -5,10 +5,13 @@ import Navbar from "../components/layout/Navbar";
 
 import QuestionInfo from "../components/questions/QuestionInfo";
 import LearningWorkspace from "../components/questions/LearningWorkspace";
+import SubmissionHistory from "../components/questions/SubmissionHistory";
+import { getSubmissions } from "../api/submissionapi";
 
 function QuestionDetails() {
     const [questionDetails, setQuestionDetails] = useState({});
     const [workspaceOpen, setWorkspaceOpen] = useState(false);
+    const [submissions, setSubmissions] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const { id } = useParams();
@@ -18,12 +21,29 @@ function QuestionDetails() {
         setWorkspaceOpen(true);
     };
 
+    const fetchSubmissions = async () => {
+        try {
+
+            if (!questionDetails._id) return;
+
+            const response = await getSubmissions(questionDetails._id);
+
+            setSubmissions(response.data.submissions);
+
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     useEffect(() => {
         const fetchQuestionDetails = async () => {
             try {
                 setLoading(true);
                 const response = await getQuestionById(id);
-                setQuestionDetails(response.data.question);
+                const question = response.data.question;
+                setQuestionDetails(question);
+                const submissionResponse = await getSubmissions(question._id);
+                setSubmissions(submissionResponse.data.submissions);
             } catch (error) {
                 setError(error);
                 console.error(error);
@@ -60,6 +80,8 @@ function QuestionDetails() {
                                     handleLeetCode={handleLeetCode}
                                 />
 
+                                <SubmissionHistory submissions={submissions} />
+
                             </div>
 
                         </div>
@@ -70,6 +92,7 @@ function QuestionDetails() {
 
                             <LearningWorkspace
                                 questionDetails={questionDetails}
+                                fetchSubmissions={fetchSubmissions}
                             />
 
                         </div>

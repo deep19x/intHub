@@ -2,7 +2,7 @@ import { useState } from "react";
 import ChoiceView from "./learningWorkspace/ChoiceView";
 import HelpView from "./learningWorkspace/HelpView";
 import SolvedView from "./learningWorkspace/SolvedView";
-function LearningWorkspace({questionDetails}) {
+function LearningWorkspace({questionDetails,fetchSubmissions}) {
     const [mode,setMode] = useState("choice");
     const [helpStep,setHelpStep] = useState(0);
     return (
@@ -16,7 +16,7 @@ function LearningWorkspace({questionDetails}) {
             )}
 
             {mode === "solved" && (
-                <SolvedView setMode={setMode} questionDetails={questionDetails}/>
+                <SolvedView setMode={setMode} questionDetails={questionDetails} fetchSubmissions={fetchSubmissions}/>
             )}
         </>
     )

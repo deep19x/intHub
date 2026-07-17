@@ -15,7 +15,8 @@ const getMySubmissions = async (req, res) => {
                 createdAt: 1,
                 "aiReview.rating": 1,
             })
-            .sort({ createdAt: -1 });
+            .sort({ createdAt: -1 })
+            .limit(5);
 
         return res.status(200).json({
             submissions,

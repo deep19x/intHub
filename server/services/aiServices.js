@@ -36,8 +36,6 @@ exports.reviewCode = async ({ userId,questionId, language, code }) => {
         },
     });
 
-    console.log(response.choices[0].message.content);
-
     try {
         const review = JSON.parse(response.choices[0].message.content);
 

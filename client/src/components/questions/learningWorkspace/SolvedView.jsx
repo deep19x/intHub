@@ -47,7 +47,7 @@ public:
 }`
 };
 
-function SolvedView({ setMode, questionDetails }) {
+function SolvedView({ setMode, questionDetails,fetchSubmissions }) {
 
     const [language, setLanguage] = useState("cpp");
     const [code, setCode] = useState(starterCode.cpp);
@@ -66,6 +66,8 @@ function SolvedView({ setMode, questionDetails }) {
             });
 
             setReview(response.data.review);
+
+            await fetchSubmissions();
 
             setReviewDone(true);
         } catch (error) {
