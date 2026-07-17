@@ -8,7 +8,7 @@ function LearningWorkspace({questionDetails,fetchSubmissions}) {
     return (
         <>
             {mode === "choice" && (
-                <ChoiceView setMode={setMode}/>
+                <ChoiceView setMode={setMode} questionDetails={questionDetails}/>
             )}
 
             {mode === "help" && (

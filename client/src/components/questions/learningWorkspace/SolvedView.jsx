@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { reviewSolution } from "../../../api/aiapi";
+import { updateProgress } from "../../../api/progressapi";
 
 import Editor from "@monaco-editor/react";
 
@@ -66,6 +67,8 @@ function SolvedView({ setMode, questionDetails,fetchSubmissions }) {
             });
 
             setReview(response.data.review);
+
+            await updateProgress(questionDetails._id, "solved");
 
             await fetchSubmissions();
 

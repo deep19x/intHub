@@ -11,14 +11,14 @@ import { Badge } from "@/components/ui/badge";
 
 import { Link } from "react-router-dom";
 
-function QuestionCard({ question }) {
+function QuestionCard({ question, progressStatus }) {
     let difficultyClass = "";
 
-    if(question.difficulty === "Easy"){
+    if (question.difficulty === "Easy") {
         difficultyClass = "bg-green-100 text-green-700";
-    } else if (question.difficulty === "Medium"){
+    } else if (question.difficulty === "Medium") {
         difficultyClass = "bg-yellow-100 text-yellow-700";
-    }else {
+    } else {
         difficultyClass = "bg-red-100 text-red-700";
     }
 
@@ -38,10 +38,34 @@ function QuestionCard({ question }) {
                     ))}
                 </div>
 
-                {/* Topic & Difficulty */}
-                <div className="flex gap-2">
-                    <Badge className='bg-purple-100 text-purple-700 hover:bg-purple-200'>{question.topic}</Badge>
-                    <Badge variant="outline" className={difficultyClass}>{question.difficulty}</Badge>
+                {/* Status, Topic & Difficulty */}
+                <div className="flex flex-wrap gap-2">
+
+                    {progressStatus === "solved" ? (
+                        <Badge className="bg-green-600 text-white">
+                            Solved
+                        </Badge>
+                    ) : progressStatus === "attempted" ? (
+                        <Badge className="bg-yellow-500 text-black">
+                            Attempted
+                        </Badge>
+                    ) : (
+                        <Badge variant="secondary">
+                            Todo
+                        </Badge>
+                    )}
+
+                    <Badge className="bg-purple-100 text-purple-700 hover:bg-purple-200">
+                        {question.topic}
+                    </Badge>
+
+                    <Badge
+                        variant="outline"
+                        className={difficultyClass}
+                    >
+                        {question.difficulty}
+                    </Badge>
+
                 </div>
 
                 {/* Open Button */}

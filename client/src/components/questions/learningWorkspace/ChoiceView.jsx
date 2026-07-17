@@ -10,8 +10,19 @@ import {
     FileCode2,
     ArrowRight,
 } from "lucide-react";
+import { updateProgress } from "../../../api/progressapi";
 
-function ChoiceView({ setMode }) {
+function ChoiceView({ setMode,questionDetails }) {
+
+    const handleNeedHelp = async() => {
+        try {
+            await updateProgress(questionDetails._id,"attempted");
+            setMode("help");
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     return (
         <Card className="rounded-xl shadow-md min-h-175">
 
@@ -57,7 +68,7 @@ function ChoiceView({ setMode }) {
                             variant="outline"
                             size="lg"
                             className="h-16 text-base"
-                            onClick={() => setMode("help")}
+                            onClick={handleNeedHelp}
                         >
                             <Lightbulb className="mr-2 h-5 w-5" />
                             I Need Help
