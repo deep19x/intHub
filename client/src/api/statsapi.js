@@ -7,3 +7,7 @@ export const getOverallStats = () => {
 export const getDashboardStats = () => {
     return api.get('/stats/dashboard');
 }
+
+export const getRecentActivity = () => {
+    return api.get("/stats/recent-activity");
+};

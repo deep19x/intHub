@@ -19,4 +19,10 @@ router
     .route('/dashboard')
     .get(authMiddleware,statsController.getDashboardStats);
 
+router.get(
+    "/recent-activity",
+    authMiddleware,
+    statsController.getRecentActivity
+);
+
 module.exports = router;

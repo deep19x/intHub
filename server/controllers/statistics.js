@@ -1,4 +1,5 @@
 const statsServices = require('../services/statsServices');
+const Submission = require("../models/submission");
 
 const getStats = async (req, res) => {
     try {
@@ -78,4 +79,30 @@ const getDashboardStats = async (req, res) => {
     }
 }
 
-module.exports = { getStats, getStatsOnTopics, getStatsOnDifficulty, getDashboardStats};
+const getRecentActivity = async (req, res) => {
+    try {
+
+        const submissions = await Submission.find({
+            user: req.user.userId,
+        })
+            .populate("question", "title")
+            .sort({ createdAt: -1 })
+            .limit(5)
+            .select("question language aiReview.rating createdAt");
+
+        return res.status(200).json({
+            submissions,
+        });
+
+    } catch (error) {
+
+        return res.status(500).json({
+            message: error.message,
+        });
+
+    }
+};
+
+
+
+module.exports = { getStats, getStatsOnTopics, getStatsOnDifficulty, getDashboardStats,getRecentActivity};

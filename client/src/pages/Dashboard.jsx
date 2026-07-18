@@ -5,6 +5,7 @@ import StatCard from "../components/dashboard/StatCard";
 import CompletionCard from "../components/dashboard/CompletionCard";
 import RecommendationCard from "../components/dashboard/RecommendationCard";
 import WeakTopicsCard from "../components/dashboard/WeakTopicsCard";
+import RecentActivity from "../components/dashboard/RecentActivity";
 
 import { getDashboardStats } from "../api/statsapi";
 
@@ -35,17 +36,17 @@ function Dashboard() {
         return <div>Loading...</div>;
     }
 
-    const { overallStats, topicStats,weakTopics, message } = dashboardStats;
+    const { overallStats, topicStats, weakTopics, message } = dashboardStats;
 
     const topicsEntries = Object.entries(topicStats);
 
-    const weakTopicsFilter = topicsEntries.filter(([topic,stats]) => {
+    const weakTopicsFilter = topicsEntries.filter(([topic, stats]) => {
         return stats.completionPercentage < 30
     });
 
-    const top5weakTopicsFilter = weakTopicsFilter.sort((a,b) => {
+    const top5weakTopicsFilter = weakTopicsFilter.sort((a, b) => {
         return a[1].completionPercentage - b[1].completionPercentage;
-    }).slice(0,5);
+    }).slice(0, 5);
 
     return (
         <>
@@ -95,11 +96,15 @@ function Dashboard() {
                         weakTopics={weakTopics}
                         message={message}
                     />
-                    <WeakTopicsCard weakTopics={top5weakTopicsFilter}/>
+                    <WeakTopicsCard weakTopics={top5weakTopicsFilter} />
+                </div>
+
+                <div className="mt-8">
+                    <RecentActivity />
                 </div>
             </main>
 
-            <Footer/>
+            <Footer />
         </>
     );
 }
