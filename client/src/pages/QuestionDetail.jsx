@@ -7,10 +7,12 @@ import QuestionInfo from "../components/questions/QuestionInfo";
 import LearningWorkspace from "../components/questions/LearningWorkspace";
 import SubmissionHistory from "../components/questions/SubmissionHistory";
 import { getSubmissions } from "../api/submissionapi";
+import { getMyProgress } from "../api/progressapi";
 
 function QuestionDetails() {
     const [questionDetails, setQuestionDetails] = useState({});
     const [workspaceOpen, setWorkspaceOpen] = useState(false);
+    const [progressStatus, setProgressStatus] = useState(null);
     const [submissions, setSubmissions] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -44,13 +46,21 @@ function QuestionDetails() {
                 setQuestionDetails(question);
                 const submissionResponse = await getSubmissions(question._id);
                 setSubmissions(submissionResponse.data.submissions);
+                const progressResponse = await getMyProgress();
+                const progress = progressResponse.data.progress.find(
+                    (item) => item.question._id === question._id
+                );
+                if (progress) {
+                    setProgressStatus(progress.status);
+                    setWorkspaceOpen(true);
+                }
             } catch (error) {
                 setError(error);
                 console.error(error);
             } finally {
                 setLoading(false);
             }
-        }
+        };
 
         fetchQuestionDetails();
     }, [id]);
@@ -93,6 +103,7 @@ function QuestionDetails() {
                             <LearningWorkspace
                                 questionDetails={questionDetails}
                                 fetchSubmissions={fetchSubmissions}
+                                progressStatus={progressStatus}
                             />
 
                         </div>
