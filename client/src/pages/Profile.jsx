@@ -3,6 +3,7 @@ import Navbar from "../components/layout/Navbar";
 import { getDashboardStats } from "../api/statsapi";
 import { getMe } from "../api/authapi";
 import { useNavigate } from "react-router-dom";
+import QuestionCardSkeleton from "../components/loaders/QuestionCardSkeleton";
 
 import {
     Card,
@@ -68,9 +69,20 @@ function Profile() {
         return (
             <>
                 <Navbar />
-                <div className="max-w-6xl mx-auto p-8">
-                    Loading...
+
+                <div className="max-w-7xl mx-auto p-6">
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                        {Array.from({ length: 6 }).map((_, index) => (
+                            <QuestionCardSkeleton key={index} />
+                        ))}
+
+                    </div>
+
                 </div>
+
+                <Footer/>
             </>
         );
     }
@@ -326,7 +338,7 @@ function Profile() {
 
             </div>
 
-            <Footer/>
+            <Footer />
 
         </>
     );

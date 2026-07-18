@@ -5,6 +5,7 @@ import Navbar from "../components/layout/Navbar";
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { getMyProgress } from "../api/progressapi";
+import QuestionCardSkeleton from "../components/loaders/QuestionCardSkeleton";
 import Footer from "../components/layout/Footer";
 
 function Questions() {
@@ -47,7 +48,23 @@ function Questions() {
     }, []);
 
     if (loading) {
-        return <h2>Loading questions...</h2>;
+        return (
+            <>
+                <Navbar />
+
+                <div className="max-w-7xl mx-auto p-6">
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                        {Array.from({ length: 6 }).map((_, index) => (
+                            <QuestionCardSkeleton key={index} />
+                        ))}
+
+                    </div>
+
+                </div>
+            </>
+        );
     }
 
     if (error) {
@@ -152,7 +169,7 @@ function Questions() {
                 </div>
             </div>
 
-            <Footer/>
+            <Footer />
 
         </>
     );

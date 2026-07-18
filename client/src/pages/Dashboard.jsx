@@ -6,6 +6,7 @@ import CompletionCard from "../components/dashboard/CompletionCard";
 import RecommendationCard from "../components/dashboard/RecommendationCard";
 import WeakTopicsCard from "../components/dashboard/WeakTopicsCard";
 import RecentActivity from "../components/dashboard/RecentActivity";
+import QuestionCardSkeleton from "../components/loaders/QuestionCardSkeleton";
 
 import { getDashboardStats } from "../api/statsapi";
 
@@ -33,7 +34,25 @@ function Dashboard() {
     }, []);
 
     if (!dashboardStats) {
-        return <div>Loading...</div>;
+        return (
+            <>
+                <Navbar />
+
+                <div className="max-w-7xl mx-auto p-6">
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                        {Array.from({ length: 6 }).map((_, index) => (
+                            <QuestionCardSkeleton key={index} />
+                        ))}
+
+                    </div>
+
+                </div>
+
+                <Footer/>
+            </>
+        );
     }
 
     const { overallStats, topicStats, weakTopics, message } = dashboardStats;

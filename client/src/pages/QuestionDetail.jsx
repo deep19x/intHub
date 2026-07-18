@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getQuestionById } from "../api/questionsapi";
 import Navbar from "../components/layout/Navbar";
-
+import QuestionCardSkeleton from "../components/loaders/QuestionCardSkeleton";
 import QuestionInfo from "../components/questions/QuestionInfo";
 import LearningWorkspace from "../components/questions/LearningWorkspace";
 import SubmissionHistory from "../components/questions/SubmissionHistory";
@@ -65,6 +65,26 @@ function QuestionDetails() {
 
         fetchQuestionDetails();
     }, [id]);
+
+    if (loading) {
+        return (
+            <>
+                <Navbar />
+
+                <div className="max-w-7xl mx-auto p-6">
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                        {Array.from({ length: 6 }).map((_, index) => (
+                            <QuestionCardSkeleton key={index} />
+                        ))}
+
+                    </div>
+
+                </div>
+            </>
+        );
+    }
     return (
         <>
             <Navbar />
@@ -115,7 +135,7 @@ function QuestionDetails() {
 
             </div>
 
-            <Footer/>
+            <Footer />
 
 
         </>
