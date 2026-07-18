@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { register } from "../api/authapi";
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import AnimatedBackground from "../components/AnimatedBackground";
 
 import {
     Card,
@@ -27,15 +28,16 @@ function Register() {
 
         try {
             setLoading(true);
+
             await register({
                 name,
                 email,
-                password
+                password,
             });
 
             alert("Registration Successful");
 
-            navigate('/login');
+            navigate("/login");
         } catch (error) {
             console.log(error);
             alert(error.response?.data?.message || "Registration Failed");
@@ -45,19 +47,14 @@ function Register() {
     };
 
     return (
-        <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-slate-950">
-            {/* Background Glows */}
-            <div className="absolute -top-40 -left-40 h-96 w-96 rounded-full bg-cyan-500 opacity-20 blur-3xl"></div>
+        <div className="relative flex min-h-screen items-center justify-center overflow-hidden">
 
-            <div className="absolute -bottom-40 -right-40 h-96 w-96 rounded-full bg-purple-600 opacity-20 blur-3xl"></div>
+            <AnimatedBackground />
 
-            <div className="absolute top-1/3 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-blue-500 opacity-10 blur-3xl"></div>
+            <Card className="relative z-10 w-105 border border-white/10 bg-white/5 text-white backdrop-blur-2xl shadow-[0_0_80px_rgba(59,130,246,.15)] transition-all duration-500 hover:scale-[1.01]">
 
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#1e293b_0%,#020617_70%)]"></div>
-
-            {/* Register Card */}
-            <Card className="relative z-10 w-105 border-white/10 bg-white/5 text-white backdrop-blur-xl shadow-2xl">
                 <CardHeader className="space-y-3 text-center">
+
                     <CardTitle className="bg-linear-to-r from-cyan-400 to-purple-400 bg-clip-text text-4xl font-bold text-transparent">
                         InTHub
                     </CardTitle>
@@ -65,11 +62,15 @@ function Register() {
                     <CardDescription className="text-gray-300">
                         Create your account and begin your interview journey.
                     </CardDescription>
+
                 </CardHeader>
 
                 <CardContent>
+
                     <form onSubmit={handleSubmit} className="space-y-5">
+
                         <div className="space-y-2">
+
                             <Label className="text-gray-200">
                                 Name
                             </Label>
@@ -81,9 +82,11 @@ function Register() {
                                 onChange={(e) => setName(e.target.value)}
                                 className="border-white/10 bg-white/10 text-white placeholder:text-gray-400"
                             />
+
                         </div>
 
                         <div className="space-y-2">
+
                             <Label className="text-gray-200">
                                 Email
                             </Label>
@@ -95,9 +98,11 @@ function Register() {
                                 onChange={(e) => setEmail(e.target.value)}
                                 className="border-white/10 bg-white/10 text-white placeholder:text-gray-400"
                             />
+
                         </div>
 
                         <div className="space-y-2">
+
                             <Label className="text-gray-200">
                                 Password
                             </Label>
@@ -109,28 +114,33 @@ function Register() {
                                 onChange={(e) => setPassword(e.target.value)}
                                 className="border-white/10 bg-white/10 text-white placeholder:text-gray-400"
                             />
+
                         </div>
 
                         <Button
                             type="submit"
-                            className="w-full bg-purple-500 text-white hover:bg-purple-400"
                             disabled={loading}
+                            className="w-full bg-purple-500 text-white hover:bg-purple-400"
                         >
-                            {loading ? "Creating Account" : "Create Account"}
+                            {loading ? "Creating Account..." : "Create Account"}
                         </Button>
 
                         <p className="text-center text-sm text-gray-300">
                             Already have an account?{" "}
                             <Link
                                 to="/login"
-                                className="text-cyan-400 hover:text-cyan-300"
+                                className="font-medium text-cyan-400 transition hover:text-cyan-300"
                             >
                                 Login
                             </Link>
                         </p>
+
                     </form>
+
                 </CardContent>
+
             </Card>
+
         </div>
     );
 }

@@ -5,6 +5,163 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@keyframes aurora-one {
+    0% {
+        transform: translate(0,0) scale(1);
+    }
+    50% {
+        transform: translate(120px,60px) scale(1.15);
+    }
+    100% {
+        transform: translate(0,0) scale(1);
+    }
+}
+
+@keyframes aurora-two {
+    0% {
+        transform: translate(0,0) scale(1);
+    }
+    50% {
+        transform: translate(-150px,-80px) scale(1.2);
+    }
+    100% {
+        transform: translate(0,0) scale(1);
+    }
+}
+
+@keyframes aurora-three {
+    0% {
+        transform: translate(0,0) scale(1);
+    }
+    50% {
+        transform: translate(70px,-120px) scale(1.1);
+    }
+    100% {
+        transform: translate(0,0) scale(1);
+    }
+}
+
+.animate-aurora-one{
+    animation:aurora-one 14s ease-in-out infinite;
+}
+
+.animate-aurora-two{
+    animation:aurora-two 18s ease-in-out infinite;
+}
+
+.animate-aurora-three{
+    animation:aurora-three 16s ease-in-out infinite;
+}
+
+/* ---------- Aurora ---------- */
+
+.aurora {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(120px);
+    opacity: .65;
+    mix-blend-mode: screen;
+}
+
+.aurora-1{
+    width:600px;
+    height:600px;
+    background:#06b6d4;
+    top:-180px;
+    left:-120px;
+    animation:aurora1 14s ease-in-out infinite alternate;
+}
+
+.aurora-2{
+    width:700px;
+    height:700px;
+    background:#7c3aed;
+    top:10%;
+    right:-220px;
+    animation:aurora2 18s ease-in-out infinite alternate;
+}
+
+.aurora-3{
+    width:650px;
+    height:650px;
+    background:#2563eb;
+    bottom:-220px;
+    left:30%;
+    animation:aurora3 16s ease-in-out infinite alternate;
+}
+
+@keyframes aurora1{
+
+    0%{
+        transform:translate(0,0) scale(1);
+    }
+
+    25%{
+        transform:translate(120px,80px) scale(1.2);
+    }
+
+    50%{
+        transform:translate(220px,-30px) scale(.9);
+    }
+
+    75%{
+        transform:translate(100px,150px) scale(1.15);
+    }
+
+    100%{
+        transform:translate(0,0) scale(1);
+    }
+
+}
+
+@keyframes aurora2{
+
+    0%{
+        transform:translate(0,0) scale(1);
+    }
+
+    25%{
+        transform:translate(-180px,120px) scale(1.1);
+    }
+
+    50%{
+        transform:translate(-280px,-80px) scale(1.25);
+    }
+
+    75%{
+        transform:translate(-120px,160px) scale(.95);
+    }
+
+    100%{
+        transform:translate(0,0) scale(1);
+    }
+
+}
+
+@keyframes aurora3{
+
+    0%{
+        transform:translate(0,0) scale(1);
+    }
+
+    25%{
+        transform:translate(-120px,-120px) scale(1.15);
+    }
+
+    50%{
+        transform:translate(120px,-220px) scale(.9);
+    }
+
+    75%{
+        transform:translate(220px,-80px) scale(1.2);
+    }
+
+    100%{
+        transform:translate(0,0) scale(1);
+    }
+
+}
+
 @theme inline {
     --font-heading: var(--font-sans);
     --font-sans: 'Geist Variable', sans-serif;

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { login,getMe } from "../api/authapi";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { login, getMe } from "../api/authapi";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/authContext";
+import AnimatedBackground from "../components/AnimatedBackground";
 
 import {
     Card,
@@ -22,8 +22,7 @@ function Login() {
     const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
-
-    const {setUser} = useAuth();
+    const { setUser } = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -33,10 +32,10 @@ function Login() {
 
             const response = await login({
                 email,
-                password
+                password,
             });
 
-            localStorage.setItem('token', response.data.token);
+            localStorage.setItem("token", response.data.token);
 
             const me = await getMe();
 
@@ -44,7 +43,7 @@ function Login() {
 
             alert("Login Successful");
 
-            navigate('/dashboard');
+            navigate("/dashboard");
         } catch (error) {
             console.log(error);
             alert(error.response?.data?.message || "Login Failed");
@@ -54,35 +53,33 @@ function Login() {
     };
 
     return (
-        <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-slate-950">
-            {/* Background gradients */}
+        <div className="relative flex min-h-screen items-center justify-center overflow-hidden">
 
-            <div className="absolute -top-40 -left-40 h-96 w-96 rounded-full bg-cyan-500 opacity-20 blur-3xl"></div>
+            <AnimatedBackground />
 
-            <div className="absolute -bottom-40 -right-40 h-96 w-96 rounded-full bg-purple-600 opacity-20 blur-3xl"></div>
+            <Card className="relative z-10 w-105 bg-white/5 border border-white/10 backdrop-blur-2xl shadow-[0_0_80px_rgba(59,130,246,.15)] text-white">
 
-            <div className="absolute top-1/3 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-blue-500 opacity-10 blur-3xl"></div>
-
-            {/* Grid overlay */}
-
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#1e293b_0%,#020617_70%)]"></div>
-
-            {/* Card */}
-
-            <Card className="relative z-10 w-105 border-white/10 bg-white/5 text-white backdrop-blur-xl shadow-2xl">
                 <CardHeader className="space-y-3 text-center">
-                    <CardTitle className="text-4xl font-bold bg-linear-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+
+                    <CardTitle className="bg-linear-to-r from-cyan-400 to-purple-400 bg-clip-text text-4xl font-bold text-transparent">
                         InTHub
                     </CardTitle>
 
                     <CardDescription className="text-gray-300">
                         AI-Powered Interview Preparation Platform
                     </CardDescription>
+
                 </CardHeader>
 
                 <CardContent>
-                    <form onSubmit={handleSubmit} className="space-y-5">
+
+                    <form
+                        onSubmit={handleSubmit}
+                        className="space-y-5"
+                    >
+
                         <div className="space-y-2">
+
                             <Label className="text-gray-200">
                                 Email
                             </Label>
@@ -94,9 +91,11 @@ function Login() {
                                 onChange={(e) => setEmail(e.target.value)}
                                 className="border-white/10 bg-white/10 text-white placeholder:text-gray-400"
                             />
+
                         </div>
 
                         <div className="space-y-2">
+
                             <Label className="text-gray-200">
                                 Password
                             </Label>
@@ -108,28 +107,33 @@ function Login() {
                                 onChange={(e) => setPassword(e.target.value)}
                                 className="border-white/10 bg-white/10 text-white placeholder:text-gray-400"
                             />
+
                         </div>
 
                         <Button
                             type="submit"
-                            className="w-full bg-purple-500 text-white hover:bg-purple-400"
                             disabled={loading}
+                            className="w-full bg-purple-500 text-white hover:bg-purple-400"
                         >
-                            {loading ? "Loggin..." : "Login"}
+                            {loading ? "Logging..." : "Login"}
                         </Button>
 
                         <p className="text-center text-sm text-gray-300">
                             Don't have an account?{" "}
                             <Link
                                 to="/register"
-                                className="text-cyan-400 hover:text-cyan-300"
+                                className="font-medium text-cyan-400 transition hover:text-cyan-300"
                             >
                                 Register
                             </Link>
                         </p>
+
                     </form>
+
                 </CardContent>
+
             </Card>
+
         </div>
     );
 }
