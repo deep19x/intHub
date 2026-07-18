@@ -8,6 +8,7 @@ import LearningWorkspace from "../components/questions/LearningWorkspace";
 import SubmissionHistory from "../components/questions/SubmissionHistory";
 import { getSubmissions } from "../api/submissionapi";
 import { getMyProgress } from "../api/progressapi";
+import Footer from "../components/layout/Footer";
 
 function QuestionDetails() {
     const [questionDetails, setQuestionDetails] = useState({});
@@ -67,7 +68,7 @@ function QuestionDetails() {
     return (
         <>
             <Navbar />
-            <div className="max-w-7xl mx-auto px-6 py-8">
+            <div className="max-w-7xl mx-auto px-6 py-8 flex-1">
 
                 {!workspaceOpen ? (
 
@@ -113,6 +114,8 @@ function QuestionDetails() {
                 )}
 
             </div>
+
+            <Footer/>
 
 
         </>

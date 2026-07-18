@@ -25,6 +25,7 @@ import {
     BookOpen,
     LogOut,
 } from "lucide-react";
+import Footer from "../components/layout/Footer";
 
 function Profile() {
 
@@ -78,7 +79,7 @@ function Profile() {
         <>
             <Navbar />
 
-            <div className="max-w-6xl mx-auto p-8">
+            <div className="max-w-6xl mx-auto p-8 flex-1">
 
                 <Card className="shadow-xl rounded-2xl">
 
@@ -324,6 +325,8 @@ function Profile() {
                 </Card>
 
             </div>
+
+            <Footer/>
 
         </>
     );

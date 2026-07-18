@@ -5,6 +5,7 @@ import Navbar from "../components/layout/Navbar";
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { getMyProgress } from "../api/progressapi";
+import Footer from "../components/layout/Footer";
 
 function Questions() {
     const [questions, setQuestions] = useState([]);
@@ -90,7 +91,7 @@ function Questions() {
 
         <>
             <Navbar />
-            <div className="max-w-7xl mx-auto p-6 ">
+            <div className="max-w-7xl mx-auto p-6 flex-1 ">
 
                 <div className="mb-8">
                     <h1 className="text-3xl font-bold">Interview Questions</h1>
@@ -150,6 +151,8 @@ function Questions() {
                     ))}
                 </div>
             </div>
+
+            <Footer/>
 
         </>
     );

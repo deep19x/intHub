@@ -13,6 +13,7 @@ import {
     CircleCheckBig,
     Flag,
 } from "lucide-react";
+import Footer from "../components/layout/Footer";
 
 function Dashboard() {
     const [dashboardStats, setDashboardStats] = useState(null);
@@ -50,7 +51,7 @@ function Dashboard() {
         <>
             <Navbar />
 
-            <main className="mx-auto max-w-screen-2xl px-8 py-8">
+            <main className="mx-auto max-w-screen-2xl px-8 py-8 flex-1">
                 <h1 className="text-3xl font-bold">
                     Welcome back 👋
                 </h1>
@@ -97,6 +98,8 @@ function Dashboard() {
                     <WeakTopicsCard weakTopics={top5weakTopicsFilter}/>
                 </div>
             </main>
+
+            <Footer/>
         </>
     );
 }
