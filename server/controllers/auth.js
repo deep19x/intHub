@@ -1,14 +1,18 @@
 const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { registerSchema, loginSchema } = require('../validators/authValidator');
 
 const registerUser = async (req, res) => {
     try {
-        const { name, email, password } = req.body;
 
-        if (!name || !email || !password) {
-            return res.status(400).json({ message: "Please fill all credentials for register" });
+        const { error, value } = registerSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json({
+                message: error.details[0].message,
+            });
         }
+        const { name, email, password } = value;
 
         const existingUser = await User.findOne({ email });
 
@@ -33,7 +37,13 @@ const registerUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { error, value } = loginSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json({
+                message: error.details[0].message,
+            });
+        }
+        const { email, password } = value;
 
         if (!email || !password) {
             return res.status(400).json({ message: "Please fill all credentials for login" });
@@ -64,7 +74,7 @@ const loginUser = async (req, res) => {
     }
 }
 
-const meUser = async(req,res) => {
+const meUser = async (req, res) => {
     try {
         const user = await User.findById(req.user.userId).select("-password");
 

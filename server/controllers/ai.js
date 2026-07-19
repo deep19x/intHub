@@ -1,17 +1,20 @@
-const {reviewCode} = require('../services/aiServices');
+const { reviewCode } = require('../services/aiServices');
+const { submitSolutionSchema } = require("../validators/submissionValidator");
 
-const reviewSolution = async(req,res) => {
+const reviewSolution = async (req, res) => {
     try {
-        const {questionId,language,code} = req.body;
+        const { error, value } = submitSolutionSchema.validate(req.body);
 
-        if(!questionId || !language || !code){
+        if (error) {
             return res.status(400).json({
-                message : "Question id,language,code is required"
+                message: error.details[0].message,
             });
         }
 
+        const { questionId, language, code } = value;
+
         const review = await reviewCode({
-            userId:req.user.userId,
+            userId: req.user.userId,
             questionId,
             language,
             code
@@ -27,4 +30,4 @@ const reviewSolution = async(req,res) => {
     }
 }
 
-module.exports = {reviewSolution};
+module.exports = { reviewSolution };

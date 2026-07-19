@@ -1,23 +1,29 @@
 const Question = require('../models/question');
 const mongoose = require('mongoose');
+const { createQuestionSchema } = require("../validators/questionValidator");
 
-const createQuestion = async(req,res) => {
+const createQuestion = async (req, res) => {
     try {
-        const { title, companies , difficulty , topic} = req.body;
-        if(!title || !difficulty || !topic){
-            return res.status(400).json({message:"Please enter required fields"});
+
+        const { error, value } = createQuestionSchema.validate(req.body);
+
+        if (error) {
+            return res.status(400).json({
+                message: error.details[0].message,
+            });
         }
 
-        const question = await Question.create({
-            title,
-            companies,
-            difficulty,
-            topic
+        const question = await Question.create(value);
+
+        return res.status(201).json({
+            message: "Question created successfully",
+            question,
         });
 
-        return res.status(201).json({message: "Question created",question});
     } catch (error) {
-        return res.status(500).json({message: error.message});
+        return res.status(500).json({
+            message: error.message,
+        });
     }
 };
 
