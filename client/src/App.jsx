@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";
 import QuestionDetails from './pages/QuestionDetail';
+import NotFound from "./pages/NotFound";
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path="/profile" element={<Profile/>}/>
         <Route path="/dashboard" element={<Dashboard/>}/>
         <Route path='/questions/:id' element={<QuestionDetails/>}/>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
