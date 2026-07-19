@@ -48,7 +48,7 @@ public:
 }`
 };
 
-function SolvedView({ setMode, questionDetails,fetchSubmissions }) {
+function SolvedView({ setMode, questionDetails, fetchSubmissions }) {
 
     const [language, setLanguage] = useState("cpp");
     const [code, setCode] = useState(starterCode.cpp);
@@ -81,7 +81,7 @@ function SolvedView({ setMode, questionDetails,fetchSubmissions }) {
     };
 
     return (
-        <Card className="rounded-xl shadow-md min-h-175">
+        <Card className="rounded-xl shadow-md min-h-fit">
 
             <CardHeader className="border-b">
 
@@ -92,7 +92,7 @@ function SolvedView({ setMode, questionDetails,fetchSubmissions }) {
 
             </CardHeader>
 
-            <CardContent className="p-8">
+            <CardContent className="p-5 lg:p-8">
 
                 <div className="space-y-6">
 
@@ -157,27 +157,51 @@ function SolvedView({ setMode, questionDetails,fetchSubmissions }) {
 
                     {/* Monaco Editor */}
 
-                    <div className="overflow-hidden rounded-lg border">
+                    {/* Monaco Editor */}
+
+                    <div className="overflow-hidden rounded-lg border w-full">
 
                         <Editor
-                            height="450px"
+
+                            height={window.innerWidth < 640 ? "350px" : "500px"}
+
                             language={language}
-                            theme="vs-dark"
+
                             value={code}
+
                             onChange={(value) => setCode(value || "")}
+
+                            theme="vs-dark"
+
                             options={{
+
                                 minimap: {
-                                    enabled: false,
+                                    enabled: false
                                 },
-                                fontSize: 15,
-                                automaticLayout: true,
-                                scrollBeyondLastLine: false,
+
+                                fontSize: window.innerWidth < 640 ? 12 : 14,
+
                                 wordWrap: "on",
-                                tabSize: 4,
+
+                                automaticLayout: true,
+
+                                scrollBeyondLastLine: false,
+
                                 padding: {
-                                    top: 16,
+                                    top: 12
                                 },
+
+                                lineNumbers: "on",
+
+                                scrollbar: {
+                                    horizontal: "hidden",
+                                    vertical: "auto"
+                                },
+
+                                fixedOverflowWidgets: true,
+
                             }}
+
                         />
 
                     </div>

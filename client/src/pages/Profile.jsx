@@ -82,7 +82,7 @@ function Profile() {
 
                 </div>
 
-                <Footer/>
+                <Footer />
             </>
         );
     }
@@ -97,9 +97,9 @@ function Profile() {
 
                     <CardHeader>
 
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
 
-                            <div className="flex items-center gap-6">
+                            <div className="flex items-center gap-4 sm:gap-6 min-w-0">
 
                                 <Avatar className="h-24 w-24 text-3xl">
 

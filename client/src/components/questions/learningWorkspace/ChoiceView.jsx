@@ -24,7 +24,7 @@ function ChoiceView({ setMode,questionDetails }) {
     }
 
     return (
-        <Card className="rounded-xl shadow-md min-h-175">
+        <Card className="rounded-xl shadow-md min-h-fit">
 
             <CardHeader className="border-b">
                 <CardTitle className="flex items-center gap-2 text-2xl">

@@ -17,22 +17,20 @@ function QuestionDetails() {
     const [submissions, setSubmissions] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+
     const { id } = useParams();
 
     const handleLeetCode = () => {
-        window.open(questionDetails.leetcodeUrl, '_blank');
+        window.open(questionDetails.leetcodeUrl, "_blank");
         setWorkspaceOpen(true);
     };
 
     const fetchSubmissions = async () => {
         try {
-
             if (!questionDetails._id) return;
 
             const response = await getSubmissions(questionDetails._id);
-
             setSubmissions(response.data.submissions);
-
         } catch (error) {
             console.error(error);
         }
@@ -42,15 +40,21 @@ function QuestionDetails() {
         const fetchQuestionDetails = async () => {
             try {
                 setLoading(true);
+
                 const response = await getQuestionById(id);
                 const question = response.data.question;
+
                 setQuestionDetails(question);
+
                 const submissionResponse = await getSubmissions(question._id);
                 setSubmissions(submissionResponse.data.submissions);
+
                 const progressResponse = await getMyProgress();
+
                 const progress = progressResponse.data.progress.find(
                     (item) => item.question._id === question._id
                 );
+
                 if (progress) {
                     setProgressStatus(progress.status);
                     setWorkspaceOpen(true);
@@ -71,75 +75,59 @@ function QuestionDetails() {
             <>
                 <Navbar />
 
-                <div className="max-w-7xl mx-auto p-6">
-
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
                         {Array.from({ length: 6 }).map((_, index) => (
                             <QuestionCardSkeleton key={index} />
                         ))}
-
                     </div>
-
                 </div>
             </>
         );
     }
+
     return (
         <>
             <Navbar />
-            <div className="max-w-7xl mx-auto px-6 py-8 flex-1">
 
-                {!workspaceOpen ? (
+            <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 min-h-screen">
 
-                    <QuestionInfo
-                        questionDetails={questionDetails}
-                        handleLeetCode={handleLeetCode}
-                    />
+                {workspaceOpen ? (
+                    <>
+                        <div className="flex flex-col lg:flex-row gap-6">
 
-                ) : (
-
-                    <div className="grid grid-cols-12 gap-6 items-start">
-
-                        {/* Left Panel */}
-                        <div className="col-span-4">
-
-                            <div className="sticky top-20 h-[calc(100vh-6rem)]">
-
+                            {/* Left */}
+                            <div className="lg:w-[32%] space-y-6">
                                 <QuestionInfo
                                     questionDetails={questionDetails}
                                     handleLeetCode={handleLeetCode}
                                 />
-
-                                <SubmissionHistory submissions={submissions} />
-
+                                <SubmissionHistory
+                                    submissions={submissions}
+                                />
                             </div>
 
+                            {/* Right */}
+                            <div className="lg:flex-1">
+                                <LearningWorkspace
+                                    questionDetails={questionDetails}
+                                    fetchSubmissions={fetchSubmissions}
+                                    progressStatus={progressStatus}
+                                />
+                            </div>
                         </div>
-
-                        {/* Right Panel */}
-
-                        <div className="col-span-8 col-start-5">
-
-                            <LearningWorkspace
-                                questionDetails={questionDetails}
-                                fetchSubmissions={fetchSubmissions}
-                                progressStatus={progressStatus}
-                            />
-
-                        </div>
-
-                    </div>
-
+                    </>
+                ) : (
+                    <QuestionInfo
+                        questionDetails={questionDetails}
+                        handleLeetCode={handleLeetCode}
+                    />
                 )}
 
-            </div>
+            </main>
 
             <Footer />
-
-
         </>
-
     );
 }
 

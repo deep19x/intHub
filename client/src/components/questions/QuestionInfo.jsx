@@ -15,8 +15,8 @@ import {
 
 function QuestionInfo({ questionDetails, handleLeetCode }) {
     return (
-        <Card className="h-full shadow-lg rounded-xl border">
-            <CardContent className="h-full overflow-y-auto p-5 pr-3">
+        <Card className="shadow-lg rounded-xl border self-start">
+            <CardContent className="p-5">
                 <div className="space-y-5">
 
                     <Link
