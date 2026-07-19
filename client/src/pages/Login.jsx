@@ -20,15 +20,41 @@ function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
+    const [errors, setErrors] = useState({});
 
     const navigate = useNavigate();
     const { setUser } = useAuth();
 
+    const validate = () => {
+        const newErrors = {};
+
+        if (!email.trim()) {
+            newErrors.email = "Email is required";
+        } else if (
+            !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+        ) {
+            newErrors.email = "Please enter a valid email";
+        }
+
+        if (!password.trim()) {
+            newErrors.password = "Password is required";
+        } else if (password.length < 6) {
+            newErrors.password = "Password must be at least 6 characters";
+        }
+
+        setErrors(newErrors);
+
+        return Object.keys(newErrors).length === 0;
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (!validate()) return;
+
         try {
             setLoading(true);
+            setErrors({});
 
             const response = await login({
                 email,
@@ -41,12 +67,12 @@ function Login() {
 
             setUser(me.data);
 
-            alert("Login Successful");
-
             navigate("/dashboard");
         } catch (error) {
             console.log(error);
-            alert(error.response?.data?.message || "Login Failed");
+            setErrors({
+                api: error.response?.data?.message || "Login Failed",
+            });
         } finally {
             setLoading(false);
         }
@@ -88,9 +114,25 @@ function Login() {
                                 type="email"
                                 placeholder="Enter your email"
                                 value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                onChange={(e) => {
+                                    setEmail(e.target.value);
+
+                                    if (errors.email || errors.api) {
+                                        setErrors((prev) => ({
+                                            ...prev,
+                                            email: "",
+                                            api: "",
+                                        }));
+                                    }
+                                }}
                                 className="border-white/10 bg-white/10 text-white placeholder:text-gray-400"
                             />
+
+                            {errors.email && (
+                                <p className="text-sm text-red-400">
+                                    {errors.email}
+                                </p>
+                            )}
 
                         </div>
 
@@ -104,11 +146,33 @@ function Login() {
                                 type="password"
                                 placeholder="Enter your password"
                                 value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                onChange={(e) => {
+                                    setPassword(e.target.value);
+
+                                    if (errors.password || errors.api) {
+                                        setErrors((prev) => ({
+                                            ...prev,
+                                            password: "",
+                                            api: "",
+                                        }));
+                                    }
+                                }}
                                 className="border-white/10 bg-white/10 text-white placeholder:text-gray-400"
                             />
 
+                            {errors.password && (
+                                <p className="text-sm text-red-400">
+                                    {errors.password}
+                                </p>
+                            )}
+
                         </div>
+
+                        {errors.api && (
+                            <p className="text-center text-sm text-red-400">
+                                {errors.api}
+                            </p>
+                        )}
 
                         <Button
                             type="submit"

@@ -20,14 +20,44 @@ function Register() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
+    const [errors, setErrors] = useState({});
 
     const navigate = useNavigate();
+
+    const validate = () => {
+        const newErrors = {};
+
+        if (!name.trim()) {
+            newErrors.name = "Name is required";
+        } else if (name.trim().length < 3) {
+            newErrors.name = "Name must be at least 3 characters";
+        }
+
+        if (!email.trim()) {
+            newErrors.email = "Email is required";
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            newErrors.email = "Please enter a valid email";
+        }
+
+        if (!password.trim()) {
+            newErrors.password = "Password is required";
+        } else if (password.length < 6) {
+            newErrors.password = "Password must be at least 6 characters";
+        }
+
+        setErrors(newErrors);
+
+        return Object.keys(newErrors).length === 0;
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (!validate()) return;
+
         try {
             setLoading(true);
+            setErrors({});
 
             await register({
                 name,
@@ -35,12 +65,12 @@ function Register() {
                 password,
             });
 
-            alert("Registration Successful");
-
             navigate("/login");
         } catch (error) {
             console.log(error);
-            alert(error.response?.data?.message || "Registration Failed");
+            setErrors({
+                api: error.response?.data?.message || "Registration Failed",
+            });
         } finally {
             setLoading(false);
         }
@@ -79,9 +109,23 @@ function Register() {
                                 type="text"
                                 placeholder="Enter your name"
                                 value={name}
-                                onChange={(e) => setName(e.target.value)}
+                                onChange={(e) => {
+                                    setName(e.target.value);
+
+                                    setErrors((prev) => ({
+                                        ...prev,
+                                        name: "",
+                                        api: "",
+                                    }));
+                                }}
                                 className="border-white/10 bg-white/10 text-white placeholder:text-gray-400"
                             />
+
+                            {errors.name && (
+                                <p className="text-sm text-red-400">
+                                    {errors.name}
+                                </p>
+                            )}
 
                         </div>
 
@@ -95,9 +139,23 @@ function Register() {
                                 type="email"
                                 placeholder="Enter your email"
                                 value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                onChange={(e) => {
+                                    setEmail(e.target.value);
+
+                                    setErrors((prev) => ({
+                                        ...prev,
+                                        email: "",
+                                        api: "",
+                                    }));
+                                }}
                                 className="border-white/10 bg-white/10 text-white placeholder:text-gray-400"
                             />
+
+                            {errors.email && (
+                                <p className="text-sm text-red-400">
+                                    {errors.email}
+                                </p>
+                            )}
 
                         </div>
 
@@ -111,12 +169,32 @@ function Register() {
                                 type="password"
                                 placeholder="Create a password"
                                 value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                onChange={(e) => {
+                                    setPassword(e.target.value);
+
+                                    setErrors((prev) => ({
+                                        ...prev,
+                                        password: "",
+                                        api: "",
+                                    }));
+                                }}
                                 className="border-white/10 bg-white/10 text-white placeholder:text-gray-400"
                             />
 
+                            {errors.password && (
+                                <p className="text-sm text-red-400">
+                                    {errors.password}
+                                </p>
+                            )}
+
                         </div>
 
+                        {errors.api && (
+                            <p className="text-center text-sm text-red-400">
+                                {errors.api}
+                            </p>
+                        )}
+                        
                         <Button
                             type="submit"
                             disabled={loading}
