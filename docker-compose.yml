@@ -1,0 +1,28 @@
+services:
+  backend:
+    build: ./server
+    container_name: inthub-backend
+
+    ports:
+      - "5000:5000"
+
+    env_file:
+      - ./server/.env
+    
+    volumes:
+    - ./server:/server
+    - /server/node_modules
+
+  frontend:
+    build: ./client
+    container_name: inthub-frontend
+
+    ports:
+      - "5173:5173"
+
+    depends_on:
+      - backend
+    
+    volumes:
+    - ./client:/client
+    - /client/node_modules
